@@ -1,0 +1,87 @@
+---
+title: "Uber data plots"
+author: "Daniel Oyeleye"
+date: "2023-10-24"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## R Markdown
+
+
+
+```{r warning=FALSE}
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+```
+
+Returns a data frame with the variables total number of rides for each hour of the day, base and month
+```{r}
+rides_per_hour_base_month <- function(df){
+  return (df %>% group_by(Hour, Base, Month)  %>% dplyr:: summarise(num_rides = n()))
+}
+
+```
+
+```{r message=FALSE}
+april_sep14 <- read.csv("C:\\Users\\danie\\Documents\\projects\\data projects\\uber data\\uber_april_sep14.csv")
+rides_hbm <- rides_per_hour_base_month(april_sep14)
+```
+
+Scatter plot, box plot and histogram of number of rides per hour of day
+```{r, echo=FALSE}
+ggplot(data=rides_hbm) +
+  geom_point(mapping = aes(x=Hour, y = num_rides))+ labs(title = "number of rides vs hour", y="number of rides")
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Hour)) + labs(y = "number of rides")
+ggplot(data=rides_hbm) +
+  geom_boxplot(mapping = aes(y=num_rides, color = Hour)) + labs(y = "number of rides")
+```
+
+Histogram, scatter plot and box plot of number of rides per base
+```{r, echo=FALSE}
+ggplot(data=rides_hbm) +
+  geom_point(mapping = aes(x=Base, y = num_rides)) + labs(title = "number of rides vs base", y="number of rides")
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Base)) + labs(y = "number of rides")
+ggplot(data=rides_hbm) +
+  geom_boxplot(mapping = aes(y=num_rides, color=Base)) + labs(y = "number of rides")
+```
+
+Histogram, scatter plot and box plot of number of rides per month
+```{r}
+ggplot(data=rides_hbm) +
+  geom_point(mapping = aes(x=Month, y = num_rides)) + labs(title = "number of rides vs month", y="number of rides")
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Month)) + labs(y = "number of rides")
+ggplot(data=rides_hbm) +
+  geom_boxplot(mapping = aes(y=num_rides, color=Month)) + labs(y = "number of rides")
+```
+
+Histogram of number of rides per base and month
+```{r, echo=FALSE}
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Base, fill=Month)) + labs(y = "number of rides")
+```
+
+Histogram of number of rides per hour of day, base and month
+```{r, echo=FALSE}
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Hour, color=Month, fill=Base)) + labs(y = "number of rides")
+```
+
+Histogram of number of rides per hour of day and base
+```{r, echo=FALSE}
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Hour, fill=Base)) + labs(y = "number of rides")
+```
+
+Histogram of number of rides per hour of day and month
+```{r, echo=FALSE}
+ggplot(data=april_sep14) +
+  geom_bar(mapping = aes(x=Hour, fill=Month)) + labs(y = "number of rides")
+```
+

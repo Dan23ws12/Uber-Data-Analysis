@@ -1,0 +1,29 @@
+---
+title: "Uber Data Manipulation"
+author: "Daniel Oyeleye"
+date: "2023-10-24"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Data Manipulation Section:
+I created a function to split the Datetime in the Date/Time column into date, weakday, month, hour, minute and second
+The function was
+
+```{r message=FALSE}
+library(dplyr)
+library(lubridate)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
